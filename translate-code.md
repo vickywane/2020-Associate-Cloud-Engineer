@@ -203,5 +203,61 @@ In this lab, you learn how to perform the following tasks:
    `Kubectl get pods` && `kubectl get all`
 
 
+# LAB : App Dev - Deploying the Application into App Engine Flexible Environment: Node.js
 
+# Objectives : 
    
+In this lab, you learn how to perform the following tasks:
+
+ - Create an app.yaml file to describe the App Engine Flex requirements for an application.
+ 
+ - Deploy the quiz application into App Engine Flex.
+ 
+ - Employ versions and traffic splitting to perform A/B testing of an application feature.
+
+ ## Steps : 
+
+ 1. Clone the repository for the class.
+   
+    - git clone https://github.com/GoogleCloudPlatform/training-data-analyst
+ 
+ 2. Create a soft link as a shortcut to the working directory:
+   -  ln -s ~/training-data-analyst/courses/developingapps/v1.2/nodejs/appengine ~/appengine
+
+ 3. Change the directory that contains the sample files for this lab.
+   - cd ~/appengine/start
+
+ 4. Configure the Quiz application.
+   - . prepare_environment.sh
+
+ 5. Create the app.yaml file for the frontend
+   - runtime: nodejs \ env: flex   >> ./frontend/app.yaml
+
+ 6. Modify frontend config file 
+   - { "GCLOUD_BUCKET" : "qwiklabs-gcp-03-3740d02596d7"} >> ./frontend/config.json
+
+ 7. Deploy the frontend to App Engine Flex
+   - gcloud app deploy ./frontend/app.yaml
+
+ 8. Update the quiz application
+     Open home.pug
+         - vim frontend/web-app/views/home.pug
+
+      Insert the following: 
+         extends base.pug
+
+         block content
+         h1 Welcome to the Quite Interesting Quiz!!!!!!!!!!
+         .jumbotron
+            p Welcome to the Quite Interesting Quiz where you can create a question, take a test or review feedback
+         h3.col-md-4
+            a(href="/questions/add") Create Question
+         h3.col-md-4
+            a(href="/client/") Take Test
+         h3.col-md-4
+            a(href="/leaderboard") Leaderboa
+
+ 9. Deploy the updated application
+   - gcloud app deploy ./frontend/app.yaml --no-promote \ --no-stop-previous-version
+
+     
